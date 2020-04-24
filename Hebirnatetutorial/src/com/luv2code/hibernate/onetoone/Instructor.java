@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -15,6 +16,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.hibernate.onetomany.Course;
+import com.luv2.code.hibernate.demo.entity.Review;
 
 @Entity
 @Table(name="instructor")
@@ -40,9 +42,10 @@ public class Instructor {
 	
 	//one to many mapping instructor may have many courses
 	//Refers to instructor property in Course class
-	@OneToMany(mappedBy="instructor",cascade = {CascadeType.PERSIST,CascadeType.DETACH,CascadeType.MERGE,CascadeType.REFRESH})
+	@OneToMany(fetch =FetchType.LAZY,mappedBy="instructor",cascade = {CascadeType.PERSIST,CascadeType.DETACH,CascadeType.MERGE,CascadeType.REFRESH})
 	private List<Course> courses;
 	
+
 	
 	public int getId() {
 		return id;
@@ -91,6 +94,8 @@ public class Instructor {
 	public void setCourses(List<Course> courses) {
 		this.courses = courses;
 	}
+	
+	
 
 	public Instructor() {
 		super();
@@ -119,4 +124,7 @@ public class Instructor {
 		tempCourse.setInstructor(this);
 	}
 	
+	//add convienvce method 
+	
+
 }

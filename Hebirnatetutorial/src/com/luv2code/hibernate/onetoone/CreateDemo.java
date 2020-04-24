@@ -4,12 +4,19 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
+import com.hibernate.onetomany.Course;
+import com.luv2.code.hibernate.demo.entity.Review;
+import com.luv2.code.hibernate.demo.entity.student;
+
 public class CreateDemo {
 
 	public static void main(String[] args) {
 		
 		SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Instructor.class)
 				.addAnnotatedClass(InstructorDetail.class)
+				.addAnnotatedClass(Course.class)
+				.addAnnotatedClass(Review.class)
+				.addAnnotatedClass(student.class)
 				.buildSessionFactory();
 
 		// create session

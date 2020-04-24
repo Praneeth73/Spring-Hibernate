@@ -4,6 +4,8 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
+import com.luv2.code.hibernate.demo.entity.Review;
+import com.luv2.code.hibernate.demo.entity.student;
 import com.luv2code.hibernate.onetoone.Instructor;
 import com.luv2code.hibernate.onetoone.InstructorDetail;
 
@@ -15,6 +17,8 @@ public class GetInstructorCoursesDemo {
 				
 				.addAnnotatedClass(InstructorDetail.class)
 				.addAnnotatedClass(Course.class)
+				.addAnnotatedClass(Review.class)
+				.addAnnotatedClass(student.class)
 				.buildSessionFactory();
 		
 		Session session = factory.getCurrentSession();

@@ -1,11 +1,20 @@
 package com.luv2.code.hibernate.demo.entity;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+
+import com.hibernate.onetomany.Course;
 
 @Entity
 @Table(name = "student")
@@ -24,6 +33,14 @@ public class student {
 
 	@Column(name = "email")
 	private String email;
+	
+	@ManyToMany(fetch =FetchType.LAZY,cascade = {CascadeType.PERSIST,CascadeType.DETACH,CascadeType.MERGE,CascadeType.REFRESH})
+	@JoinTable(
+			name="course_student",
+			joinColumns=@JoinColumn(name="student_id"),
+			inverseJoinColumns=@JoinColumn(name="course_id")
+			)
+	private List<Course> courses; 
 
 	public int getId() {
 		return id;
@@ -56,6 +73,22 @@ public class student {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public List<Course> getCourses() {
+		return courses;
+	}
+
+	public void setCourses(List<Course> courses) {
+		this.courses = courses;
+	}
 
 	public student(String firstName, String lastName, String email) {
 		this.firstName = firstName;
@@ -66,7 +99,9 @@ public class student {
 	public student() {
 
 	}
+	
 
+	
 	@Override
 	public String toString() {
 		return "student [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email + "]";

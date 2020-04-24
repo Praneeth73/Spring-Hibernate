@@ -1,15 +1,16 @@
-package com.hibernate.onetomany;
+package com.hibernate.onetomanyuni.copy;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
+import com.hibernate.onetomany.Course;
 import com.luv2.code.hibernate.demo.entity.Review;
 import com.luv2.code.hibernate.demo.entity.student;
 import com.luv2code.hibernate.onetoone.Instructor;
 import com.luv2code.hibernate.onetoone.InstructorDetail;
 
-public class CreateInstructorDemo {
+public class CreateCoursesAndReviewsDemo {
 
 	public static void main(String[] args) {
 		
@@ -17,35 +18,27 @@ public class CreateInstructorDemo {
 				
 				.addAnnotatedClass(InstructorDetail.class)
 				.addAnnotatedClass(Course.class)
-				.addAnnotatedClass(student.class)
 				.addAnnotatedClass(Review.class)
+				.addAnnotatedClass(student.class)
 				.buildSessionFactory();
 		
 		Session session = factory.getCurrentSession();
 		try {
-
-		session.beginTransaction();
 		
-		//get a instructor from db 
-		
-		int theId=1;
-		Instructor tempInstructor = session.get(Instructor.class, theId);
-		
-		// create some courses
-		Course tempCourse1  =  new Course("Air Guiter");
-		Course tempCourse2  = new Course("paintball");
-		// add the course to the instructor
-		
-		 tempInstructor.add(tempCourse1);
-		 tempInstructor.add(tempCourse2);
-		
-		//save the courses
-		 session.save(tempCourse1);
-		 session.save(tempCourse2);
+			session.beginTransaction();
+			
+			int theId=10;
+			//create a course 
+			Course tempcourse = session.get(Course.class, theId);
+			
+			//add some reviews 
+			tempcourse.addReview(new Review("good "));
+			tempcourse.addReview(new Review("awesome "));
+			
+			//save the course .... leverage the cascade all
+			session.save(tempcourse);
 
 		session.getTransaction().commit();
-		
-		
 		
 		}
 		finally {
